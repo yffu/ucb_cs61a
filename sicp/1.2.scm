@@ -87,6 +87,8 @@ iterative process, as state is captured by (dec a) and (inc b) and their sum. on
 (pascal 5 3)
 
 ;1.14
+(display "1.14")
+(newline)
 (define (count-change amount) (cc amount 5))
 (define (cc amount kinds-of-coins)
 (cond ((= amount 0) 1)
@@ -103,4 +105,8 @@ kinds-of-coins)))))
 ((= kinds-of-coins 3) 10)
 ((= kinds-of-coins 4) 25)
 ((= kinds-of-coins 5) 50)))
+
+(count-change 11)
+
+
 
