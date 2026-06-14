@@ -54,8 +54,8 @@
         ((even? count)
          (fib-fast-iter a
                         b
-                        (+ (square p) (square q))
-                        (+ (* 2 p q) (square q))
+                        (+ (* p p) (* q q))
+                        (+ (* 2 p q) (* q q))
                         (/ count 2)))
         (else (fib-fast-iter (+ (* b q) (* a q) (* a p))
                              (+ (* b p) (* a q))
@@ -63,4 +63,5 @@
                              q
                              (- count 1)))))
 
+(fib 5)
 (fib 12)
