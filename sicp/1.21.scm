@@ -65,7 +65,7 @@
 ; check the primality of consecutive odd integers in a specified range.
 
 (define (search-for-primes n i)
-  (cond ((= i 0) (newline) (display "end"))
+  (cond ((= i 0) (newline))
         ((prime? (+ n 1)) (timed-prime-test (+ n 1))
                           (search-for-primes (+ n 2) (- i 1)))
         (else (search-for-primes (+ n 2) i))))
@@ -78,4 +78,31 @@
 ; 1000: 8, 3, 4
 ; 10000: 8, 8, 7 ~ 3x the time of the 1000
 ; 100000: 22, 25, 19 ~ 3x the time of the 10000
-; the increases follow the order of growth but are not as large, perhaps due to constant cost for overhead.
+; the increases follow the order of growth but are not as large, perhaps due to constant cost for overhead. this is more noticeable in the first invocation where the runtime is 8
+
+; 1.23
+(define (next n)
+  (if (= n 2)
+      3
+      (+ n 2)))
+
+(set! find-divisor (lambda(n test-divisor)
+  (cond ((> (square test-divisor) n) n)
+        ((divides? test-divisor n) test-divisor)
+        (else (find-divisor n (next test-divisor))))))
+
+(set! search-for-primes (lambda(n i)
+  (cond ((= i 0) (newline))
+        ((prime? (+ n 1)) (timed-prime-test (+ n 1))
+                          (search-for-primes (+ n 2) (- i 1)))
+        (else (search-for-primes (+ n 2) i)))))
+
+(search-for-primes 1000 3)
+(search-for-primes 10000 3)
+(search-for-primes 100000 3)
+
+; 1000: 2 2 2 ratio (2 + 2 + 2) / (8 + 3 + 4) = 0.4 
+; 10000: 6 6 5 ratio (6 + 6 + 5) / (8 + 8 + 7) = 0.7391 
+; 100000: 12 16 15 (12 + 16 + 15) / (22 + 25 + 19) = 0.6515 
+; ratio is not 2 but generally less, as there is overhead cost that lowers the ratio
+
