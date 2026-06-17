@@ -49,3 +49,33 @@
 (smallest-divisor 199)
 (smallest-divisor 1999)
 (smallest-divisor 19999)
+
+; 1.22
+(define (timed-prime-test n)
+  (newline)
+  (display n)
+  (start-prime-test n (runtime)))
+(define (start-prime-test n start-time)
+  (if (prime? n)
+      (report-prime (- (runtime) start-time))))
+(define (report-prime elapsed-time)
+  (display " *** ")
+  (display elapsed-time))
+
+; check the primality of consecutive odd integers in a specified range.
+
+(define (search-for-primes n i)
+  (cond ((= i 0) (newline) (display "end"))
+        ((prime? (+ n 1)) (timed-prime-test (+ n 1))
+                          (search-for-primes (+ n 2) (- i 1)))
+        (else (search-for-primes (+ n 2) i))))
+
+(search-for-primes 1000 3)
+(search-for-primes 10000 3)
+(search-for-primes 100000 3)
+
+; sqrt(10) = 3.16
+; 1000: 8, 3, 4
+; 10000: 8, 8, 7 ~ 3x the time of the 1000
+; 100000: 22, 25, 19 ~ 3x the time of the 10000
+; the increases follow the order of growth but are not as large, perhaps due to constant cost for overhead.
