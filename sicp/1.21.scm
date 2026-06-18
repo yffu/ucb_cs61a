@@ -106,3 +106,33 @@
 ; 100000: 12 16 15 (12 + 16 + 15) / (22 + 25 + 19) = 0.6515 
 ; ratio is not 2 but generally less, as there is overhead cost that lowers the ratio
 
+; 1.24
+(display 1.24)
+(newline)
+
+(set! timed-prime-test (lambda (n)
+  (newline)
+  (display n)
+  (start-prime-test n (runtime))))
+(set! start-prime-test (lambda (n start-time)
+  (if (fast-prime? n 5)
+      (report-prime (- (runtime) start-time)))))
+
+(set! search-for-primes (lambda(n i)
+  (cond ((= i 0) (newline))
+        ((prime? (+ n 1)) (timed-prime-test (+ n 1))
+                          (search-for-primes (+ n 2) (- i 1)))
+        (else (search-for-primes (+ n 2) i)))))
+
+(search-for-primes 1000 3)
+(search-for-primes 10000 3)
+(search-for-primes 100000 3)
+(search-for-primes 1000000 3)
+
+; 1000: 25 19 16
+; 10000: 21 18 31
+; 100000: 39 20 42
+; 1000000: 27 25 27
+
+; due to the fermat method choosing a random number the runtime does not always trend up with increased n
+
