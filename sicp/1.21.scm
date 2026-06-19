@@ -157,16 +157,35 @@
 ;          m))))
 
 ; 1.26
-; due to applicative-order processing in scheme, the definition of square function isn't expanded out until the values of the expmod operand is returned.
-; all the arguments to Scheme procedures are avaluaed when the procedure is applied, namely for the square function.
-; this causes only one version of expmod to be evaluated before being squared. If the version with multiplication of 2 expmod operand is used, then both expmod operands are evaluated first.
+; due to applicative-order processing in scheme, all the arguments to Scheme procedures are avaluaed when the procedure is applied, namely for the square function.
+; this causes only one version of expmod to be evaluated before being squared. If the version with multiplication of 2 expmod operand is used, then both expmod operands are evaluated resulting in duplicate work.
 ; each level has 2^n nodes at level k, for Theta(n) growth rate.
-(set! expmod (lambda (base exp m)
-               (cond ((= exp 0) 1)
-                     (even? exp)
-                     (remainder (* (expmod base (/ exp 2) m)
-                                   (expmod base (/ exp 2) m)
-                                   m))
-                     (else (remainder (* base
-                                         (expmod base (- exp 1) m))
-                                      m)))))
+
+; note: comment out this definition of expmod, or the 1.27 solution won't work.
+;(set! expmod (lambda (base exp m)
+;               (cond ((= exp 0) 1)
+;                     (even? exp)
+;                     (remainder (* (expmod base (/ exp 2) m)
+;                                   (expmod base (/ exp 2) m)
+;                                   m))
+;                     (else (remainder (* base
+;                                         (expmod base (- exp 1) m))
+;                                      m)))))
+
+; 1.27
+(define (sure-prime? n)
+  (define (try-it n a)
+    (cond ((= a 0) true)
+          ((= (expmod a n n) a) (try-it n (- a 1)))
+          (else false)))
+  (try-it n (- n 1)))
+
+; Prime numbers
+(sure-prime? 199)
+(sure-prime? 1999)
+
+; Carmichael numbers
+(sure-prime? 561)
+(sure-prime? 1105)
+(sure-prime? 1729)
+(sure-prime? 2465)
