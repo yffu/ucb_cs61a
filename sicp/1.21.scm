@@ -155,3 +155,18 @@
 ;         (remainder
 ;          (* base (expmod base (- exp 1) m))
 ;          m))))
+
+; 1.26
+; due to applicative-order processing in scheme, the definition of square function isn't expanded out until the values of the expmod operand is returned.
+; all the arguments to Scheme procedures are avaluaed when the procedure is applied, namely for the square function.
+; this causes only one version of expmod to be evaluated before being squared. If the version with multiplication of 2 expmod operand is used, then both expmod operands are evaluated first.
+; each level has 2^n nodes at level k, for Theta(n) growth rate.
+(set! expmod (lambda (base exp m)
+               (cond ((= exp 0) 1)
+                     (even? exp)
+                     (remainder (* (expmod base (/ exp 2) m)
+                                   (expmod base (/ exp 2) m)
+                                   m))
+                     (else (remainder (* base
+                                         (expmod base (- exp 1) m))
+                                      m)))))
