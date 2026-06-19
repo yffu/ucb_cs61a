@@ -4,5 +4,5 @@
 ;; Bind Ctrl + / to Comment Out Selection
 (keybinding "c:/" (λ (editor event) (send editor comment-out-selection)))
 
-;; Bind Ctrl + Shift + / to Uncomment Selection
-(keybinding "c:s:/" (λ (editor event) (send editor uncomment-selection)))
+;; Bind Ctrl + Shift + / to Uncomment Selection, doesn't work
+;(keybinding "c:s:/" (λ (editor event) (send editor uncomment-selection)))
