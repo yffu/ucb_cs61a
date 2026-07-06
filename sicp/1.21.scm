@@ -24,7 +24,7 @@
 (define (fermat-test n)
   (define (try-it a)
     (= (expmod a n n ) a))
-  (try-it (+ 1 (random (- n 1)))))
+  (try-it (+ 1 (random (- n 1))))) ; need to shift 1, since you can't use 0
 
 (fermat-test 127)
 
