@@ -17,16 +17,16 @@
 
 (factorial 4)
 
-(define (pi-prod a b)
+(define (pi-prod n)
   (define (pi-term x)
-    (define numer (* 2 (quotient (+ x 3.0) 2)))
-    (define denom (+ (* 2 (quotient (+ x 2.0) 2)) 1))
+    (define numer (* 2 (quotient (+ x 3) 2)))
+    (define denom (+ (* 2 (quotient (+ x 2) 2)) 1))
 ;    (display numer)
 ;    (display "/")
 ;    (display denom)
 ;    (newline)
     (/ numer denom))
-  (* (product pi-term a inc b) 4))
+  (* (product pi-term 0 inc n) 4.0))
 
-(pi-prod 0 100)
-(pi-prod 0 1000)
+(pi-prod 100)
+(pi-prod 1000)
