@@ -25,7 +25,7 @@
   (accumulate + 0 identity a inc b))
 
 (define (product-iter term a next b)
-  (accumulate * 1 identity a inc b))
+  (accumulate-iter * 1 identity a inc b))
 
 (define (factorial n)
   (product-iter identity 1 inc n))
