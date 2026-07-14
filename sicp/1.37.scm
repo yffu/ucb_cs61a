@@ -36,3 +36,26 @@
   (helper 1))
 
 (/ 1 (cont-frac-rec (lambda (i) 1.0) (lambda (i) 1.0) 12))
+
+; 1.38
+; Ni are all 1 and Di are
+; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+; 1, 2, 1, 1, 4, 1, 1, 6, 1, 1,  8,
+; cycle length 3, (k + 1) remainder 3 == 0
+; (k + 1) quotient 3 == 1
+
+(define (series-d i)
+  (let ((i-shift (+ i 1)))
+    (if (= (remainder i-shift 3) 0)
+        (* (quotient i-shift 3) 2)
+        1)))
+
+(series-d 10)
+(series-d 11)
+
+(define (e-approx n)
+  (+ 2
+     (cont-frac (lambda (i) 1.0)
+           series-d n)))
+
+(e-approx 12)
