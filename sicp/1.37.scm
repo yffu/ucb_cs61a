@@ -53,9 +53,31 @@
 (series-d 10)
 (series-d 11)
 
-(define (e-approx n)
+(define (e-cf n)
   (+ 2
      (cont-frac (lambda (i) 1.0)
            series-d n)))
 
-(e-approx 12)
+(e-cf 12)
+
+; 1.39
+
+(define (cont-frac-n n d k)
+  (define (helper val k)
+    (if (= k 0)
+        val
+        (helper (/ (n k) (- (d k) val)) (- k 1))))
+  (helper 0.0 k))
+
+(define (square x)
+  (* x x))
+
+(define (tan-cf x k)
+  (cont-frac-n
+   (lambda (i) (if (= i 1) x (square x)))
+   (lambda (i) (- (* 2 i) 1)) k))
+
+(tan (/ 3.1415926535 4))
+
+(tan-cf (/ 3.1415926535 4) 23)
+
