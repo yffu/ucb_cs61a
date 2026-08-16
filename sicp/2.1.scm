@@ -13,7 +13,9 @@
 
 (define (make-rat n d)
   (let ((g (gcd n d))
-        (n (if (< (* n d) 0) (* -1 (abs n)) (abs n)))
+        (n (cond [(and (< n 0) (> d 0)) n]
+                 [(and (> n 0) (< d 0)) (* n -1)]
+                 [else (abs n)]))
         (d (abs d)))
     (cons (/ n g) (/ d g))))
 
