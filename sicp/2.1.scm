@@ -1,6 +1,6 @@
 #lang sicp
 
-;2.1
+; 2.1
 
 ; cons: construct
 (define x (cons 1 2))
