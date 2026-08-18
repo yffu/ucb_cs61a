@@ -7,6 +7,8 @@
 
 (define pair (cons 2 3))
 
+; tail recursion for O(1) space
+
 (define (car x)
   (define (iter x n)
     (if (= (modulo x 2) 0)
