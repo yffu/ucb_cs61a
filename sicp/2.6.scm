@@ -50,3 +50,8 @@
 (define two
   (lambda (f) (lambda (x) (f (f x)))))
 
+;; Direct addition function for Church numerals
+(define (add a b)
+  (lambda (f)
+    (lambda (x)
+      ((a f) ((b f) x)))))
