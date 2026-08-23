@@ -32,3 +32,15 @@
   (make-interval (- (lower-bound x) (upper-bound y))
                  (- (upper-bound x) (lower-bound y))))
 
+(define (width interval)
+  (/ (- (upper-bound interval) (lower-bound interval)) 2))
+
+(define i1 (make-interval 3 4))
+(define i2 (make-interval -1 2))
+(define i3 (make-interval 5 6))
+(width i1)
+(width i3)
+(width i2)
+
+(mul-interval i1 i2)
+(mul-interval i3 i2)
